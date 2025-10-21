@@ -25,8 +25,6 @@ func ScrapeArticleContent(url string) (string, error) {
 		return "", fmt.Errorf("failed to parse HTML: %w", err)
 	}
 
-	// Try to find the main content, common in article tags
-	// This is a simplistic approach and may need refinement for different sites
 	var content strings.Builder
 	doc.Find("article p, .post-content p, .entry-content p").Each(func(i int, s *goquery.Selection) {
 		content.WriteString(s.Text())
@@ -35,7 +33,7 @@ func ScrapeArticleContent(url string) (string, error) {
 
 	textContent := content.String()
 
-	if len(textContent) < 200 { // Fallback if the specific selectors failed
+	if len(textContent) < 200 {
 		textContent = doc.Find("body").Text()
 	}
 
