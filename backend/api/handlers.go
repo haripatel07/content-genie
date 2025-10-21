@@ -2,14 +2,14 @@ package api
 
 import (
 	"content-genie/backend/models"
-	"content-genie/backend/services" // <-- Replace
+	"content-genie/backend/services"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
 	"gorm.io/gorm"
 )
 
-// JobRequest represents the JSON body for creating a new job
+// JobRequest for creating a new job
 type JobRequest struct {
 	URL string `json:"url" binding:"required,url"`
 }
