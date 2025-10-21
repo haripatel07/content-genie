@@ -89,7 +89,7 @@ export default function HomePage() {
     toast.success(`${type} copied to clipboard!`);
   };
 
-  // 11. Helper to parse and display tweets
+  // Helper to parse and display tweets
   const renderTweets = (tweetsJson: string) => {
     try {
       const tweets: string[] = JSON.parse(tweetsJson);
@@ -118,7 +118,7 @@ export default function HomePage() {
   return (
     <main className="container mx-auto max-w-4xl p-4 md:p-8">
       <header className="text-center mb-8">
-        <h1 className="text-4xl md:text-5xl font-bold mb-2">Content-Genie 🤖</h1>
+        <h1 className="text-4xl md:text-5xl font-bold mb-2">Content-Genie</h1>
         <p className="text-lg text-base-content/70">
           Turn any article into a summary, tweets, and a LinkedIn post.
         </p>
