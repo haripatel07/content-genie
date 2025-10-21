@@ -1,24 +1,22 @@
-// frontend/app/page.tsx
 'use client';
 
 import { useState, useEffect, FormEvent } from 'react';
-// 1. Import toast from react-hot-toast
 import toast from 'react-hot-toast';
 import { Loader2, Clipboard, Twitter, Linkedin, FileText } from 'lucide-react';
 
-// 2. Define the Job type (same as before)
+// 1. Define the Job type
 interface Job {
   ID: number;
   original_url: string;
   status: string;
   status_detail: string;
   summary: string;
-  tweets: string; // This is a JSON string
+  tweets: string; 
   linkedin_post: string;
   CreatedAt: string;
 }
 
-// 3. Helper component for job status (using DaisyUI badge classes)
+// Helper component for job status 
 const StatusBadge = ({ status }: { status: string }) => {
   let className = 'badge';
   if (status === 'complete') className = 'badge badge-success';
@@ -29,7 +27,7 @@ const StatusBadge = ({ status }: { status: string }) => {
   return <div className={`${className} capitalize`}>{status}</div>;
 };
 
-// 4. Main Page Component
+// Main Page Component
 export default function HomePage() {
   const [url, setUrl] = useState('');
   const [jobs, setJobs] = useState<Job[]>([]);
@@ -37,7 +35,7 @@ export default function HomePage() {
 
   const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8080';
 
-  // 5. Function to fetch all jobs
+  // Function to fetch all jobs
   const fetchJobs = async () => {
     try {
       const response = await fetch(`${API_URL}/api/jobs`);
@@ -46,19 +44,18 @@ export default function HomePage() {
       setJobs(data);
     } catch (error) {
       console.error(error);
-      // 6. Use react-hot-toast
       toast.error('Could not fetch job history.');
     }
   };
 
-  // 7. Fetch jobs on load and set up polling (same as before)
+  // Fetch jobs on load and set up polling (same as before)
   useEffect(() => {
     fetchJobs();
     const interval = setInterval(fetchJobs, 5000);
     return () => clearInterval(interval);
   }, []);
 
-  // 8. Handle form submission
+  // Handle form submission
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
@@ -78,7 +75,6 @@ export default function HomePage() {
       const newJob = await response.json();
       setJobs([newJob, ...jobs]);
       setUrl('');
-      // 9. Use react-hot-toast
       toast.success('Job Submitted! Generating content...');
     } catch (error: any) {
       toast.error(`Submission Failed: ${error.message}`);
@@ -87,7 +83,7 @@ export default function HomePage() {
     }
   };
 
-  // 10. Helper to copy text to clipboard
+  // Helper to copy text to clipboard
   const copyToClipboard = (text: string, type: string) => {
     navigator.clipboard.writeText(text);
     toast.success(`${type} copied to clipboard!`);
@@ -118,7 +114,7 @@ export default function HomePage() {
     }
   };
 
-  // 12. The JSX for rendering (now with DaisyUI classes)
+  // The JSX for rendering
   return (
     <main className="container mx-auto max-w-4xl p-4 md:p-8">
       <header className="text-center mb-8">
