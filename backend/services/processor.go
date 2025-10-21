@@ -16,7 +16,7 @@ func ProcessJob(db *gorm.DB, jobID uint) {
 		return
 	}
 
-	// 1. Scrape the content from the URL
+	// Scrape the content from the URL
 	job.Status = "processing"
 	job.StatusDetail = "Scraping article content..."
 	db.Save(&job)
@@ -30,7 +30,7 @@ func ProcessJob(db *gorm.DB, jobID uint) {
 		return
 	}
 
-	// 2. Generate content with AI
+	// Generate content with AI
 	job.StatusDetail = "Generating content with AI..."
 	db.Save(&job)
 
@@ -43,7 +43,7 @@ func ProcessJob(db *gorm.DB, jobID uint) {
 		return
 	}
 
-	// 3. Update the job with the results and mark as complete
+	// Update the job with the results and mark as complete
 	job.Summary = generatedContent.Summary
 	job.LinkedInPost = generatedContent.LinkedInPost
 	if err := job.SetTweets(generatedContent.Tweets); err != nil {
